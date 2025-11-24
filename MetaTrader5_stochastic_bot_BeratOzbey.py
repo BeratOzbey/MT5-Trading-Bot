@@ -37,10 +37,8 @@ def stochastic_calculation():
     for x in range(5):
         start_pos += 1
 
-        # 14 mumluk veri çekme
         Last_14_Rates = mt5.copy_rates_from_pos("EURUSDm", TIMEFRAME_M1, start_pos, 14)
 
-        # Veri gelmezse bekle ve tekrar dene
         if Last_14_Rates is None or len(Last_14_Rates) < 14:
             k_value_text.configure(text="Waiting for MT5 data...")
             d_value_text.configure(text="")
@@ -60,12 +58,10 @@ def stochastic_calculation():
     d_value = (slowed_k + slowed_k2 + slowed_k3) / 3
     k_value = slowed_k
 
-    # GUI güncelle
     k_value_text.configure(text=f"%K : {str(slowed_k)[:5]}")
     d_value_text.configure(text=f"%D : {str(d_value)[:5]}")
     price_text.configure(text=f"Buy : {str(mt5.symbol_info('EURUSDm').ask)[:7]}\nSell : {str(mt5.symbol_info('EURUSDm').bid)[:7]}")
 
-    # Pozisyon yoksa trade araması
     if mt5.positions_total() == 0:
 
         # Sell
@@ -118,3 +114,4 @@ def stochastic_calculation():
 
 stochastic_calculation()
 ekran.mainloop()
+
